@@ -271,7 +271,7 @@ define nginx::resource::location (
     default  => file,
   }
 
-  $vhost_sanitized = regsubst($vhost, '[ ~]', '_', 'G')
+  $vhost_sanitized = regsubst($vhost, ' ', '_', 'G')
   $config_file = "${nginx::config::conf_dir}/sites-available/${vhost_sanitized}.conf"
 
   $location_sanitized_tmp = regsubst($location, '\/', '_', 'G')
@@ -348,12 +348,14 @@ define nginx::resource::location (
     }
   }
 
-  if ($auth_basic_user_file != undef) {
-    #Generate htpasswd with provided file-locations
-    file { "${nginx::config::conf_dir}/${location_sanitized}_htpasswd":
-      ensure => $ensure,
-      mode   => '0644',
-      source => $auth_basic_user_file,
-    }
-  }
+## source location in nginx config doesn't match up with created file
+## surely this is very broken? commenting it out because wahanda don't need it atm
+#  if ($auth_basic_user_file != undef) {
+#    #Generate htpasswd with provided file-locations
+#    file { "${nginx::config::conf_dir}/${location_sanitized}_htpasswd":
+#      ensure => $ensure,
+#      mode   => '0644',
+#      source => $auth_basic_user_file,
+#    }
+#  }
 }
