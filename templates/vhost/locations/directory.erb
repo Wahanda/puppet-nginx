@@ -13,9 +13,3 @@
 <% @rewrite_rules.each do |rewrite_rule| -%>
     rewrite <%= rewrite_rule %>;
 <% end -%>
-<% if defined? @auth_basic -%>
-    auth_basic           "<%= @auth_basic %>";
-<% end -%>
-<% if defined? @auth_basic_user_file -%>
-    auth_basic_user_file <%= @auth_basic_user_file %>;
-<% end -%>
